@@ -88,7 +88,14 @@ public class NotaDAO {
 
 	}
 
-	public void delete(int id) {
+	public void delete(int id) throws SQLException {
+
+		String query = "DELETE TB_NOTA WHERE id_nota = ?";
+
+		connection = ConnectionFactory.getConnection();
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, id);
+		ps.execute();
 
 	}
 
