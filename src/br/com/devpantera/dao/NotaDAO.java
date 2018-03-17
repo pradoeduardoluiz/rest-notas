@@ -17,7 +17,7 @@ public class NotaDAO {
 	public NotaMO get(int id) throws SQLException {
 
 		StringBuilder query = new StringBuilder(
-				"SELECT id, titulo, descricao FROM TB_NOTA WHERE 'a' = 'a' ");
+				"SELECT id_nota, titulo, descricao FROM tb_nota WHERE 'a' = 'a' ");
 
 		if (id > 0) {
 			query.append("AND id = '" + id + "'");
@@ -48,7 +48,7 @@ public class NotaDAO {
 
 	public int insert(NotaMO objeto) throws SQLException {
 
-		String query = "INSERT INTO TB_NOTA (titulo, descricao) VALUES (?,?)";
+		String query = "INSERT INTO tb_nota (titulo, descricao) VALUES (?,?)";
 
 		PreparedStatement ps = null;
 
@@ -72,7 +72,7 @@ public class NotaDAO {
 
 	public void update(NotaMO objeto) throws SQLException {
 
-		String query = "UPDATE TB_NOTA set titulo = ?, descricao = ? WHERE id = ?";
+		String query = "UPDATE tb_nota set titulo = ?, descricao = ? WHERE id_nota = ?";
 
 		PreparedStatement ps = null;
 
@@ -90,7 +90,7 @@ public class NotaDAO {
 
 	public void delete(int id) throws SQLException {
 
-		String query = "DELETE TB_NOTA WHERE id_nota = ?";
+		String query = "DELETE tb_nota WHERE id_nota = ?";
 
 		connection = ConnectionFactory.getConnection();
 		PreparedStatement ps = connection.prepareStatement(query);
@@ -105,7 +105,7 @@ public class NotaDAO {
 
 		connection = ConnectionFactory.getConnection();
 
-		String query = "SELECT * FROM TB_NOTA";
+		String query = "SELECT * FROM tb_nota";
 
 		PreparedStatement ps = connection.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
@@ -119,6 +119,40 @@ public class NotaDAO {
 		}
 
 		return notas;
+
+	}
+
+	public boolean isExistTitulo(String titulo) throws SQLException {
+		return isExist(titulo, "");
+	}
+
+	public boolean isExist(String titulo, String descricao) throws SQLException {
+
+		StringBuilder query = new StringBuilder(
+				"SELECT id_nota, titulo, descricao FROM tb_nota WHERE 'a' = 'a' ");
+
+		if (!titulo.isEmpty() && titulo != null) {
+			query.append("AND titulo = '" + titulo + "'");
+		}
+
+		if (!descricao.isEmpty() && descricao != null) {
+			query.append("AND descricao = '" + descricao + "'");
+		}
+
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		connection = ConnectionFactory.getConnection();
+		stmt = connection.createStatement();
+		rs = stmt.executeQuery(query.toString());
+
+		if (rs.next()) {
+			return true;
+		}
+		rs.close();
+		stmt.close();
+
+		return false;
 
 	}
 

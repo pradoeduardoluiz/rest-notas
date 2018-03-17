@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-	static final String DATABASE = "notes_db";
+	static final String DATABASE = "notas_db";
 	static final String SERVER = "localhost:3306";
 	static final String USER = "root";
 	static final String PASSWORD = "root";
