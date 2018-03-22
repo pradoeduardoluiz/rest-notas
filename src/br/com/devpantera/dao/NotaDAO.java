@@ -20,7 +20,7 @@ public class NotaDAO {
 				"SELECT id_nota, titulo, descricao FROM tb_nota WHERE 'a' = 'a' ");
 
 		if (id > 0) {
-			query.append("AND id = '" + id + "'");
+			query.append("AND id_nota = '" + id + "'");
 		}
 
 		Statement stmt = null;
@@ -33,7 +33,7 @@ public class NotaDAO {
 		if (rs.next()) {
 
 			NotaMO objeto = new NotaMO();
-			objeto.setId(rs.getInt("id"));
+			objeto.setId(rs.getInt("id_nota"));
 			objeto.setTitulo(rs.getString("titulo"));
 			objeto.setDescricao(rs.getString("descricao"));
 
@@ -46,7 +46,7 @@ public class NotaDAO {
 		return null;
 	}
 
-	public int insert(NotaMO objeto) throws SQLException {
+	public int add(NotaMO objeto) throws SQLException {
 
 		String query = "INSERT INTO tb_nota (titulo, descricao) VALUES (?,?)";
 
@@ -90,7 +90,7 @@ public class NotaDAO {
 
 	public void delete(int id) throws SQLException {
 
-		String query = "DELETE tb_nota WHERE id_nota = ?";
+		String query = "DELETE FROM tb_nota WHERE id_nota = ?";
 
 		connection = ConnectionFactory.getConnection();
 		PreparedStatement ps = connection.prepareStatement(query);
